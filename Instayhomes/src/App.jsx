@@ -12,14 +12,14 @@ function App() {
     
     <Router>
       <Routes>
-        {/* Main section - change path to "*" to handle nested routes properly */}
-        <Route path="*" element={<MainRoutes />} />
-
         {/* Ambassador section */}
         <Route path="/ambassador/*" element={<AmbassadorRoutes />} />
         
         {/* Hosts section */}
         <Route path="/hosts/*" element={<HostsRoutes />} />
+
+        {/* Main section - should be last to avoid conflicting with other routes */}
+        <Route path="*" element={<MainRoutes />} />
 
         {/* Global Routes */}
         <Route path="/signup" element={<SignUpForm />} />
