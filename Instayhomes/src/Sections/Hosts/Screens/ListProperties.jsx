@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { FiUpload, FiPlus, FiMinus, FiArrowLeft, FiArrowRight, FiCheck } from "react-icons/fi";
+import { FiHome, FiMapPin, FiList, FiCheckSquare } from "react-icons/fi";
 
 export default function ListProperties() {
   const [activeStep, setActiveStep] = useState(0);
@@ -13,66 +13,333 @@ export default function ListProperties() {
     price: "",
     address: "",
     nearestUniversity: "",
-    photos: [],
-    amenities: [],
     description: "",
-    houseRules: ""
+    amenities: []
   });
 
   // Pre-defined amenities list
-  const [amenities, setAmenities] = useState([
-    { id: 1, name: "Wifi", selected: false },
-    { id: 2, name: "Kitchen", selected: false },
-    { id: 3, name: "Washer", selected: false },
-    { id: 4, name: "Dryer", selected: false },
-    { id: 5, name: "Air Conditioning", selected: false },
-    { id: 6, name: "Heating", selected: false },
-    { id: 7, name: "Dedicated Workspace", selected: false },
-    { id: 8, name: "TV", selected: false },
-    { id: 9, name: "Parking", selected: false },
-  ]);
+  const amenitiesList = [
+    "Wifi", "Kitchen", "Washer", "Dryer", "Air Conditioning", 
+    "Heating", "Dedicated Workspace", "TV", "Parking"
+  ];
 
   const totalSteps = 4;
-  const isLastStep = activeStep === totalSteps - 1;
-  const isFirstStep = activeStep === 0;
 
-  const handleNext = () => {
-    if (!isLastStep) setActiveStep((cur) => cur + 1);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handlePrev = () => {
-    if (!isFirstStep) setActiveStep((cur) => cur - 1);
+  const handleNumberChange = (name, value) => {
+    setFormData(prev => ({ ...prev, [name]: Math.max(1, value) }));
+  };
+
+  const handleAmenityToggle = (amenity) => {
+    setFormData(prev => {
+      if (prev.amenities.includes(amenity)) {
+        return { ...prev, amenities: prev.amenities.filter(a => a !== amenity) };
+      } else {
+        return { ...prev, amenities: [...prev.amenities, amenity] };
+      }
+    });
+  };
+
+  const nextStep = () => {
+    if (activeStep < totalSteps - 1) {
+      setActiveStep(prev => prev + 1);
+      window.scrollTo(0, 0);
+    }
+  };
+
+  const prevStep = () => {
+    if (activeStep > 0) {
+      setActiveStep(prev => prev - 1);
+      window.scrollTo(0, 0);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you would typically send the data to your backend
-    console.log("Form submitted:", formData);
-    // You could redirect or show a success message
-    alert("Property submitted successfully!");
+    // Here you would send the data to your backend
+    console.log("Submitting form data:", formData);
+    alert("Property listing submitted successfully!");
+    // Redirect or show success message
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
-
-  const toggleAmenity = (id) => {
-    const updatedAmenities = amenities.map(a => 
-      a.id === id ? { ...a, selected: !a.selected } : a
-    );
-    
-    setAmenities(updatedAmenities);
-    
-    // Update formData with selected amenities
-    setFormData({
-      ...formData,
-      amenities: updatedAmenities.filter(a => a.selected).map(a => a.name)
-    });
-  };
+  const steps = [
+    {
+      title: "Property Details",
+      icon: <FiHome className="w-5 h-5" />,
+      content: (
+        <div className="space-y-4">
+          <div>
+            <label className="block text-gray-700 text-sm font-medium mb-2">
+              Property Name
+            </label>
+            <input
+              type="text"
+              name="propertyName"
+              value={formData.propertyName}
+              onChange={handleInputChange}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              placeholder="e.g. Sunny Apartment Near Campus"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-gray-700 text-sm font-medium mb-2">
+              Property Type
+            </label>
+            <select
+              name="propertyType"
+              value={formData.propertyType}
+              onChange={handleInputChange}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+            >
+              <option value="">Select property type</option>
+              <option value="Apartment">Apartment</option>
+              <option value="House">House</option>
+              <option value="Studio">Studio</option>
+              <option value="Shared Room">Shared Room</option>
+              <option value="Private Room">Private Room</option>
+            </select>
+          </div>
+          
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-gray-700 text-sm font-medium mb-2">
+                Bedrooms
+              </label>
+              <div className="flex">
+                <button
+                  type="button"
+                  className="p-3 border border-gray-300 rounded-l-lg"
+                  onClick={() => handleNumberChange("bedrooms", formData.bedrooms - 1)}
+                >
+                  -
+                </button>
+                <input
+                  type="number"
+                  name="bedrooms"
+                  value={formData.bedrooms}
+                  onChange={(e) => handleNumberChange("bedrooms", parseInt(e.target.value))}
+                  className="w-full p-3 border-y border-gray-300 text-center"
+                  min="1"
+                />
+                <button
+                  type="button"
+                  className="p-3 border border-gray-300 rounded-r-lg"
+                  onClick={() => handleNumberChange("bedrooms", formData.bedrooms + 1)}
+                >
+                  +
+                </button>
+              </div>
+            </div>
+            
+            <div>
+              <label className="block text-gray-700 text-sm font-medium mb-2">
+                Bathrooms
+              </label>
+              <div className="flex">
+                <button
+                  type="button"
+                  className="p-3 border border-gray-300 rounded-l-lg"
+                  onClick={() => handleNumberChange("bathrooms", formData.bathrooms - 1)}
+                >
+                  -
+                </button>
+                <input
+                  type="number"
+                  name="bathrooms"
+                  value={formData.bathrooms}
+                  onChange={(e) => handleNumberChange("bathrooms", parseInt(e.target.value))}
+                  className="w-full p-3 border-y border-gray-300 text-center"
+                  min="1"
+                />
+                <button
+                  type="button"
+                  className="p-3 border border-gray-300 rounded-r-lg"
+                  onClick={() => handleNumberChange("bathrooms", formData.bathrooms + 1)}
+                >
+                  +
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div>
+            <label className="block text-gray-700 text-sm font-medium mb-2">
+              Monthly Price (K)
+            </label>
+            <input
+              type="number"
+              name="price"
+              value={formData.price}
+              onChange={handleInputChange}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              placeholder="e.g. 2500"
+            />
+          </div>
+        </div>
+      )
+    },
+    {
+      title: "Location",
+      icon: <FiMapPin className="w-5 h-5" />,
+      content: (
+        <div className="space-y-4">
+          <div>
+            <label className="block text-gray-700 text-sm font-medium mb-2">
+              Property Address
+            </label>
+            <input
+              type="text"
+              name="address"
+              value={formData.address}
+              onChange={handleInputChange}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              placeholder="Full address"
+            />
+          </div>
+          
+          <div>
+            <label className="block text-gray-700 text-sm font-medium mb-2">
+              Nearest University/Institution
+            </label>
+            <select
+              name="nearestUniversity"
+              value={formData.nearestUniversity}
+              onChange={handleInputChange}
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+            >
+              <option value="">Select nearest institution</option>
+              <option value="University of Zambia">University of Zambia</option>
+              <option value="Copperbelt University">Copperbelt University</option>
+              <option value="Mulungushi University">Mulungushi University</option>
+              <option value="Cavendish University">Cavendish University</option>
+              <option value="Zambia Open University">Zambia Open University</option>
+            </select>
+          </div>
+          
+          <div>
+            <label className="block text-gray-700 text-sm font-medium mb-2">
+              Property Description
+            </label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleInputChange}
+              rows="4"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+              placeholder="Describe your property..."
+            ></textarea>
+          </div>
+        </div>
+      )
+    },
+    {
+      title: "Amenities",
+      icon: <FiList className="w-5 h-5" />,
+      content: (
+        <div className="space-y-4">
+          <p className="text-gray-600 mb-4">
+            Select the amenities that your property offers:
+          </p>
+          
+          <div className="grid grid-cols-2 gap-3">
+            {amenitiesList.map((amenity) => (
+              <div 
+                key={amenity}
+                onClick={() => handleAmenityToggle(amenity)}
+                className={`p-3 border rounded-lg cursor-pointer flex items-center ${
+                  formData.amenities.includes(amenity)
+                    ? "border-red-500 bg-red-50"
+                    : "border-gray-300"
+                }`}
+              >
+                <input
+                  type="checkbox"
+                  className="mr-2"
+                  checked={formData.amenities.includes(amenity)}
+                  onChange={() => {}}
+                />
+                <span>{amenity}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )
+    },
+    {
+      title: "Review & Submit",
+      icon: <FiCheckSquare className="w-5 h-5" />,
+      content: (
+        <div className="space-y-6">
+          <div className="p-4 bg-gray-50 rounded-lg">
+            <h3 className="font-medium text-lg mb-3">Property Information</h3>
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <p className="text-gray-500">Property Name</p>
+                <p className="font-medium">{formData.propertyName || "Not provided"}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">Property Type</p>
+                <p className="font-medium">{formData.propertyType || "Not provided"}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">Bedrooms</p>
+                <p className="font-medium">{formData.bedrooms}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">Bathrooms</p>
+                <p className="font-medium">{formData.bathrooms}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">Monthly Price</p>
+                <p className="font-medium">K{formData.price || "Not provided"}</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="p-4 bg-gray-50 rounded-lg">
+            <h3 className="font-medium text-lg mb-3">Location</h3>
+            <div className="grid grid-cols-1 gap-4 text-sm">
+              <div>
+                <p className="text-gray-500">Address</p>
+                <p className="font-medium">{formData.address || "Not provided"}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">Nearest Institution</p>
+                <p className="font-medium">{formData.nearestUniversity || "Not provided"}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">Description</p>
+                <p className="font-medium">{formData.description || "Not provided"}</p>
+              </div>
+            </div>
+          </div>
+          
+          <div className="p-4 bg-gray-50 rounded-lg">
+            <h3 className="font-medium text-lg mb-3">Amenities</h3>
+            {formData.amenities.length > 0 ? (
+              <div className="flex flex-wrap gap-2">
+                {formData.amenities.map((amenity) => (
+                  <span 
+                    key={amenity}
+                    className="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm"
+                  >
+                    {amenity}
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500">No amenities selected</p>
+            )}
+          </div>
+        </div>
+      )
+    }
+  ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -93,368 +360,107 @@ export default function ListProperties() {
     }
   };
 
-  // Step content components
-  const BasicInfoStep = () => (
-    <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-      <h2 className="text-xl font-semibold text-gray-800 mb-4">Basic Information</h2>
-      
-      <div className="space-y-4">
-        <div>
-          <label className="block text-gray-700 mb-1">Property Name</label>
-          <input 
-            type="text"
-            name="propertyName"
-            value={formData.propertyName}
-            onChange={handleInputChange} 
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-            placeholder="E.g., Cozy Studio near University"
-          />
-        </div>
-        
-        <div>
-          <label className="block text-gray-700 mb-1">Property Type</label>
-          <select 
-            name="propertyType"
-            value={formData.propertyType}
-            onChange={handleInputChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-          >
-            <option value="">Select Type</option>
-            <option value="apartment">Apartment</option>
-            <option value="house">House</option>
-            <option value="hostel">Hostel</option>
-            <option value="boarding-house">Boarding House</option>
-            <option value="shared-room">Shared Room</option>
-          </select>
-        </div>
-        
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-gray-700 mb-1">Bedrooms</label>
-            <input 
-              type="number" 
-              name="bedrooms"
-              value={formData.bedrooms}
-              onChange={handleInputChange}
-              min="0"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-            />
-          </div>
-          <div>
-            <label className="block text-gray-700 mb-1">Bathrooms</label>
-            <input 
-              type="number" 
-              name="bathrooms"
-              value={formData.bathrooms}
-              onChange={handleInputChange}
-              min="0"
-              step="0.5"
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-            />
-          </div>
-        </div>
-        
-        <div>
-          <label className="block text-gray-700 mb-1">Monthly Rent (K)</label>
-          <input 
-            type="number" 
-            name="price"
-            value={formData.price}
-            onChange={handleInputChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-            placeholder="E.g., 1500"
-          />
-        </div>
-      </div>
-    </section>
-  );
-
-  const LocationStep = () => (
-    <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-      <h2 className="text-xl font-semibold text-gray-800 mb-4">Location & Photos</h2>
-      
-      <div className="space-y-4">
-        <div>
-          <label className="block text-gray-700 mb-1">Address</label>
-          <input 
-            type="text" 
-            name="address"
-            value={formData.address}
-            onChange={handleInputChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-            placeholder="Full address"
-          />
-        </div>
-        
-        <div>
-          <label className="block text-gray-700 mb-1">Nearest University/College</label>
-          <input 
-            type="text" 
-            name="nearestUniversity"
-            value={formData.nearestUniversity}
-            onChange={handleInputChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
-            placeholder="E.g., University of Zambia"
-          />
-        </div>
-        
-        <div className="mt-6">
-          <label className="block text-gray-700 mb-2">Upload Photos</label>
-          <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-            <div className="flex justify-center">
-              <FiUpload className="h-10 w-10 text-gray-400 mb-2" />
-            </div>
-            <p className="text-sm text-gray-500">Drag and drop images here, or click to select files</p>
-            <input 
-              type="file" 
-              className="hidden" 
-              multiple 
-              accept="image/*" 
-              id="property-photos" 
-            />
-            <label 
-              htmlFor="property-photos"
-              className="mt-4 inline-block px-4 py-2 bg-gray-200 text-gray-700 rounded-lg cursor-pointer hover:bg-gray-300"
-            >
-              Select Files
-            </label>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-
-  const AmenitiesStep = () => (
-    <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-      <h2 className="text-xl font-semibold text-gray-800 mb-4">Amenities & Features</h2>
-      
-      <div className="space-y-4">
-        <div>
-          <label className="block text-gray-700 mb-2">Select Available Amenities</label>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {amenities.map((amenity) => (
-              <div 
-                key={amenity.id}
-                onClick={() => toggleAmenity(amenity.id)}
-                className={`cursor-pointer rounded-lg border p-3 flex items-center gap-2 transition-colors
-                  ${amenity.selected 
-                    ? 'border-red-500 bg-red-50 text-red-700' 
-                    : 'border-gray-200 hover:border-gray-300'
-                  }`}
-              >
-                {amenity.selected 
-                  ? <FiMinus className="h-4 w-4" /> 
-                  : <FiPlus className="h-4 w-4" />
-                }
-                <span>{amenity.name}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-
-  const DescriptionStep = () => (
-    <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-      <h2 className="text-xl font-semibold text-gray-800 mb-4">Description & Rules</h2>
-      
-      <div className="space-y-4">
-        <div>
-          <label className="block text-gray-700 mb-1">Property Description</label>
-          <textarea 
-            name="description"
-            value={formData.description}
-            onChange={handleInputChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 min-h-[120px]"
-            placeholder="Describe your property, highlighting special features and the surrounding area..."
-          ></textarea>
-        </div>
-        
-        <div className="mt-4">
-          <label className="block text-gray-700 mb-1">House Rules (optional)</label>
-          <textarea 
-            name="houseRules"
-            value={formData.houseRules}
-            onChange={handleInputChange}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 min-h-[80px]"
-            placeholder="Any specific rules for your property..."
-          ></textarea>
-        </div>
-      </div>
-    </section>
-  );
-
-  const PreviewStep = () => (
-    <section className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-      <h2 className="text-xl font-semibold text-gray-800 mb-4">Preview Your Listing</h2>
-      
-      <div className="space-y-6">
-        <div>
-          <h3 className="font-medium text-gray-700">Basic Information</h3>
-          <div className="bg-gray-50 p-3 rounded-lg mt-2">
-            <p><span className="font-medium">Name:</span> {formData.propertyName || "Not provided"}</p>
-            <p><span className="font-medium">Type:</span> {formData.propertyType || "Not provided"}</p>
-            <p><span className="font-medium">Bedrooms:</span> {formData.bedrooms}</p>
-            <p><span className="font-medium">Bathrooms:</span> {formData.bathrooms}</p>
-            <p><span className="font-medium">Price:</span> K{formData.price || "Not provided"}</p>
-          </div>
-        </div>
-        
-        <div>
-          <h3 className="font-medium text-gray-700">Location</h3>
-          <div className="bg-gray-50 p-3 rounded-lg mt-2">
-            <p><span className="font-medium">Address:</span> {formData.address || "Not provided"}</p>
-            <p><span className="font-medium">Nearest Institution:</span> {formData.nearestUniversity || "Not provided"}</p>
-          </div>
-        </div>
-        
-        <div>
-          <h3 className="font-medium text-gray-700">Amenities</h3>
-          <div className="bg-gray-50 p-3 rounded-lg mt-2">
-            {formData.amenities.length > 0 ? (
-              <div className="flex flex-wrap gap-2">
-                {formData.amenities.map((amenity, index) => (
-                  <span key={index} className="bg-red-100 text-red-700 px-2 py-1 rounded-md text-sm">
-                    {amenity}
-                  </span>
-                ))}
-              </div>
-            ) : (
-              <p>No amenities selected</p>
-            )}
-          </div>
-        </div>
-        
-        <div>
-          <h3 className="font-medium text-gray-700">Description</h3>
-          <div className="bg-gray-50 p-3 rounded-lg mt-2">
-            <p>{formData.description || "No description provided"}</p>
-          </div>
-        </div>
-        
-        {formData.houseRules && (
-          <div>
-            <h3 className="font-medium text-gray-700">House Rules</h3>
-            <div className="bg-gray-50 p-3 rounded-lg mt-2">
-              <p>{formData.houseRules}</p>
-            </div>
-          </div>
-        )}
-      </div>
-    </section>
-  );
-
-  // Render the appropriate step based on activeStep
-  const renderStep = () => {
-    switch (activeStep) {
-      case 0:
-        return <BasicInfoStep />;
-      case 1:
-        return <LocationStep />;
-      case 2:
-        return <AmenitiesStep />;
-      case 3:
-        return <PreviewStep />;
-      default:
-        return <BasicInfoStep />;
-    }
-  };
-
   return (
     <motion.div 
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="pt-20 min-h-screen max-w-3xl mx-auto px-4 py-8"
+      className="pt-20 min-h-screen max-w-3xl mx-auto px-4 py-8 pb-24"
     >
-      <motion.h1 
-        variants={itemVariants}
-        className="text-3xl font-bold text-gray-800 mb-2"
-      >
-        List Your Property
-      </motion.h1>
+      <motion.div variants={itemVariants} className="mb-8">
+        <h1 className="text-2xl font-bold text-gray-800">List Your Property</h1>
+        <p className="text-gray-600">Complete this simple form to add your property</p>
+      </motion.div>
       
-      <motion.p 
-        variants={itemVariants}
-        className="text-gray-600 mb-8"
-      >
-        Fill in the details below to create your property listing
-      </motion.p>
-      
-      {/* Stepper Progress Bar */}
-      <motion.div variants={itemVariants} className="relative w-full mb-8">
-        <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-          <div
-            className="h-2 bg-red-600 transition-all duration-500 ease-in-out"
-            style={{ width: `${((activeStep + 1) / totalSteps) * 100}%` }}
-          ></div>
-        </div>
-        
-        <div className="flex justify-between mt-2">
-          {Array.from({ length: totalSteps }).map((_, index) => (
+      {/* Step Indicators */}
+      <motion.div variants={itemVariants} className="mb-8">
+        <div className="flex justify-between">
+          {steps.map((step, index) => (
             <div 
-              key={index} 
+              key={index}
               className={`flex flex-col items-center ${
                 index <= activeStep ? 'text-red-600' : 'text-gray-400'
               }`}
             >
               <div 
-                className={`w-6 h-6 rounded-full flex items-center justify-center mb-1 ${
-                  index <= activeStep ? 'bg-red-600 text-white' : 'bg-gray-200'
+                className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                  index < activeStep 
+                    ? 'bg-red-600 text-white' 
+                    : index === activeStep
+                      ? 'bg-red-600 text-white'
+                      : 'bg-gray-200 text-gray-500'
                 }`}
               >
                 {index < activeStep ? (
-                  <FiCheck className="w-4 h-4" />
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
                 ) : (
-                  index + 1
+                  <span>{step.icon}</span>
                 )}
               </div>
-              <span className="text-xs hidden sm:block">
-                {index === 0 ? 'Basic Info' : 
-                 index === 1 ? 'Location' : 
-                 index === 2 ? 'Amenities' : 
-                 'Preview'}
-              </span>
+              <span className="mt-2 text-xs font-medium hidden sm:block">{step.title}</span>
             </div>
           ))}
         </div>
+        
+        <div className="relative mt-2">
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gray-200 rounded-full">
+            <div 
+              className="h-1 bg-red-600 rounded-full transition-all duration-500" 
+              style={{ width: `${(activeStep / (totalSteps - 1)) * 100}%` }}
+            ></div>
+          </div>
+        </div>
       </motion.div>
       
-      <motion.form variants={itemVariants} onSubmit={handleSubmit} className="space-y-8">
-        {/* Current Step Content */}
-        {renderStep()}
+      {/* Form Step Content */}
+      <motion.div 
+        variants={itemVariants}
+        className="bg-white rounded-lg p-6 shadow-sm mb-6"
+      >
+        <h2 className="text-xl font-medium mb-4">
+          {steps[activeStep].title}
+        </h2>
         
-        {/* Navigation Buttons */}
-        <div className="flex justify-between pt-4">
-          <button 
+        <form>
+          {steps[activeStep].content}
+        </form>
+      </motion.div>
+      
+      {/* Navigation Buttons */}
+      <motion.div variants={itemVariants} className="flex justify-between">
+        <button
+          type="button"
+          onClick={prevStep}
+          disabled={activeStep === 0}
+          className={`px-5 py-2 rounded-lg font-medium ${
+            activeStep === 0
+              ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          }`}
+        >
+          Back
+        </button>
+        
+        {activeStep === totalSteps - 1 ? (
+          <button
             type="button"
-            onClick={handlePrev}
-            className={`px-6 py-2 flex items-center gap-2 ${
-              isFirstStep ? 'invisible' : 'text-gray-600 hover:text-gray-800'
-            }`}
+            onClick={handleSubmit}
+            className="px-5 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700"
           >
-            <FiArrowLeft /> Back
+            Submit Listing
           </button>
-          
-          {isLastStep ? (
-            <button 
-              type="submit"
-              className="px-8 py-2 bg-red-600 text-white font-medium rounded-lg shadow-md hover:bg-red-700 transition-colors flex items-center gap-2"
-            >
-              Submit Listing <FiCheck className="w-4 h-4" />
-            </button>
-          ) : (
-            <button 
-              type="button"
-              onClick={handleNext}
-              className="px-8 py-2 bg-red-600 text-white font-medium rounded-lg shadow-md hover:bg-red-700 transition-colors flex items-center gap-2"
-            >
-              Next <FiArrowRight className="w-4 h-4" />
-            </button>
-          )}
-        </div>
-      </motion.form>
+        ) : (
+          <button
+            type="button"
+            onClick={nextStep}
+            className="px-5 py-2 bg-red-600 text-white rounded-lg font-medium hover:bg-red-700"
+          >
+            Continue
+          </button>
+        )}
+      </motion.div>
     </motion.div>
   );
 }
