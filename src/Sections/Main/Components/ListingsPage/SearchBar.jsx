@@ -9,7 +9,7 @@ export default function SearchBar({query}) {
                  <Link 
                      to="/search"
                      type="text" 
-                     className="h-12 w-96 shadow-lg flex items-center justify-center rounded-3xl z-0 focus:shadow focus:outline-none text-center text-gray-500" 
+                     className="h-12 w-96 flex items-center justify-center rounded-xl z-0 border border-gray-200 focus:shadow focus:outline-none text-center text-gray-500" 
                      
                  >{query || "Search by University or Location"}</Link>
                  <div className="absolute top-4 right-3">

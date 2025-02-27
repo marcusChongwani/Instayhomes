@@ -31,7 +31,7 @@ export default function Hero() {
             <div className="md:flex gap-4">
               <Link
                 to="/listings"
-                className="px-6 py-3 bg-gray-700 text-white text-lg rounded-md shadow-2xl hover:bg-gray-700 hover:text-red-500 transition duration-300"
+                className="px-6 py-3 bg-gray-700 text-white text-lg rounded-md shadow-2xl hover:bg-gray-700  transition duration-300"
               >
                 Browse Listings
               </Link>

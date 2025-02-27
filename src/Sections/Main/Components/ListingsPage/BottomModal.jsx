@@ -2,22 +2,11 @@ import React from "react";
 import useMeasure from "react-use-measure";
 import { useDragControls, useMotionValue, useAnimate, motion } from "framer-motion";
 
-const BottomModal = ({ open, setOpen }) => {
+const BottomModal = ({ open, setOpen, children }) => {
   return (
     open && (
       <DragCloseDrawer open={open} setOpen={setOpen}>
-        <div className="mx-auto max-w-2xl space-y-4 text-black">
-          <h2 className="text-4xl font-bold text-black">
-            Drag the handle at the top of this modal downwards 100px to close it
-          </h2>
-          <p>
-            Eos in saepe dignissimos tempore. Laudantium cumque eius, et
-            distinctio illum magnam molestiae doloribus. Fugiat voluptatum
-            necessitatibus vero eligendi quae, similique non debitis qui veniam
-            praesentium rerum labore libero architecto tempore nesciunt est
-            atque animi voluptatibus. 
-          </p>
-        </div>
+        {children}
       </DragCloseDrawer>
     )
   );
@@ -42,8 +31,9 @@ const DragCloseDrawer = ({ open, setOpen, children }) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       onClick={handleClose}
-      className="fixed inset-0 z-50 bg-black bg-opacity-50"
+      className="fixed min-h-[30vh] inset-0 z-50 bg-black bg-opacity-50"
     >
+   
       <motion.div
         id="drawer"
         ref={drawerRef}
@@ -51,7 +41,7 @@ const DragCloseDrawer = ({ open, setOpen, children }) => {
         initial={{ y: "100%" }}
         animate={{ y: "0%" }}
         transition={{ ease: "easeInOut" }}
-        className="absolute bottom-0 h-[50vh] w-full overflow-hidden rounded-t-2xl bg-white"
+        className="absolute bottom-0 w-full overflow-hidden rounded-t-2xl bg-white"
         style={{ y }}
         drag="y"
         dragControls={controls}
@@ -72,7 +62,7 @@ const DragCloseDrawer = ({ open, setOpen, children }) => {
             className="h-2 w-14 cursor-grab touch-none rounded-full bg-neutral-700 active:cursor-grabbing"
           />
         </div>
-        <div className="relative z-0 h-full overflow-y-scroll p-4 pt-12">{children}</div>
+        <div className="relative z-0 p-4 pt-12">{children}</div>
       </motion.div>
     </motion.div>
   );

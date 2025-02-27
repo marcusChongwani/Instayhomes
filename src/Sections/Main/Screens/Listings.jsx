@@ -81,7 +81,7 @@ export default function ListingsPage() {
 
       {/* Toggle Button */}
       <button
-        className="fixed bottom-4 left-1/2 transform -translate-x-1/2 px-4 py-2 bg-red-600 rounded-full text-white shadow-xl flex items-center gap-2 transition-transform duration-200 hover:scale-105 z-20"
+        className="fixed bottom-4 left-1/2 transform -translate-x-1/2 px-4 py-2 bg-red-600 rounded-lg text-white shadow-xl flex items-center gap-2 transition-transform duration-200 hover:scale-105 z-20"
         onClick={() => setIsMapView((prev) => !prev)}
         whileTap={{ scale: 0.95 }}
       >
