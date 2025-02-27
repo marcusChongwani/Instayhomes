@@ -1,13 +1,13 @@
 
-import { Outlet } from "react-router-dom";
+import React from "react";
 import Navbar from "../Sections/Hosts/Components/Navbar";
 
-export default function HostsLayout() {
+export default function HostsLayout({ children }) {
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
       <main>
-        <Outlet />
+        {children}
       </main>
     </div>
   );
