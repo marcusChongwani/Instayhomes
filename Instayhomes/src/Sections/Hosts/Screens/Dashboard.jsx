@@ -32,7 +32,7 @@ export default function Dashboard() {
     >
       <motion.h1 
         variants={itemVariants}
-        className="text-3xl font-bold text-gray-800 mb-4"
+        className="text-3xl font-bold text-gray-800 mt-4 mb-2"
       >
         Host Dashboard
       </motion.h1>
