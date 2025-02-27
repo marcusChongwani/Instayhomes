@@ -27,13 +27,13 @@ export default function DashboardNav() {
 
   return (
     <div className="mb-8 pb-4">
-      <nav className="flex overflow-x-auto border-b border-gray-200">
+      <nav className="flex overflow-x-auto border-b border-gray-200 pb-2 ">
         {navItems.map((item) => (
           <Link
             key={item.id}
             to={item.path}
-            className={`flex items-center gap-2 py-3 px-4 font-medium text-sm relative ${
-              activeTab === item.id ? "text-red-600" : "text-gray-500 hover:text-gray-700"
+            className={`flex items-center gap-2 py-3  px-4 font-medium text-sm relative ${
+              activeTab === item.id ? "text-red-600" : "text-gray-500 hover:text-gray-700 "
             }`}
           >
             {item.icon}

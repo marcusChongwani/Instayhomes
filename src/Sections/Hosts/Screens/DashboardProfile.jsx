@@ -25,8 +25,8 @@ export default function DashboardProfile() {
   const profileData = {
     name: "John Smith",
     email: "john.smith@example.com",
-    phone: "+1 (555) 123-4567",
-    address: "123 Main St, Portland, OR 97201",
+    phone: "+260999888867",
+    address: "123 Main St, ThornPark, Lusaka",
     joined: "January 2023",
     properties: 4,
     rating: 4.8
@@ -45,7 +45,7 @@ export default function DashboardProfile() {
             <FiUser size={40} />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-gray-800">{profileData.name}</h2>
+            <h2 className="text-2xl font-bold text-gray-700">{profileData.name}</h2>
             <p className="text-gray-500">Host since {profileData.joined}</p>
             <div className="mt-2 flex items-center">
               <div className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
@@ -61,7 +61,7 @@ export default function DashboardProfile() {
       </motion.div>
 
       <motion.div variants={itemVariants} className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-        <h3 className="text-xl font-semibold mb-4">Contact Information</h3>
+        <h3 className="text-xl font-semibold text-gray-700 mb-4">Contact Information</h3>
         <div className="space-y-4">
           <div className="flex items-center gap-3">
             <FiMail className="text-gray-400" />
@@ -95,19 +95,34 @@ export default function DashboardProfile() {
       </motion.div>
 
       <motion.div variants={itemVariants} className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-        <h3 className="text-xl font-semibold mb-4">Account Settings</h3>
+        <h3 className="text-xl font-semibold text-gray-700 mb-4">Assistant Contact Information</h3>
         <div className="space-y-4">
-          <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg w-full md:w-auto text-left md:text-center">
-            Change Password
-          </button>
-          <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg w-full md:w-auto text-left md:text-center">
-            Notification Settings
-          </button>
-          <button className="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg w-full md:w-auto text-left md:text-center">
-            Privacy Settings
-          </button>
+          <div className="flex items-center gap-3">
+            <FiMail className="text-gray-400" />
+            <div>
+              <p className="text-sm text-gray-500">Name</p>
+              <p className="text-gray-700">Joyce M</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <FiMail className="text-gray-400" />
+            <div>
+              <p className="text-sm text-gray-500">Email</p>
+              <p className="text-gray-700">{profileData.email}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <FiPhone className="text-gray-400" />
+            <div>
+              <p className="text-sm text-gray-500">Phone</p>
+              <p className="text-gray-700">{profileData.phone}</p>
+            </div>
+          </div>
+         
+      
         </div>
       </motion.div>
+
     </motion.div>
   );
 }
