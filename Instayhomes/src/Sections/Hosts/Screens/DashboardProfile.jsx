@@ -38,7 +38,7 @@ export default function DashboardProfile() {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="min-h-screen"
+      className="pt-10 min-h-screen"
     >
       <motion.h1 
         variants={itemVariants}

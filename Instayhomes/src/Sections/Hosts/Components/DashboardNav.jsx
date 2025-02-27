@@ -4,6 +4,11 @@ import { Link, useLocation } from "react-router-dom";
 import { FiHome, FiList, FiUser } from "react-icons/fi";
 import { motion } from "framer-motion";
 
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { motion } from "framer-motion";
+import { FiHome, FiList, FiUser } from "react-icons/fi";
+
 export default function DashboardNav() {
   const location = useLocation();
   const [activeTab, setActiveTab] = useState("overview");
@@ -27,8 +32,8 @@ export default function DashboardNav() {
   }, [location.pathname]);
   
   return (
-    <div className="mb-8">
-      <nav className="flex border-b border-gray-200">
+    <div className="mb-8 pb-4">
+      <nav className="flex overflow-x-auto border-b border-gray-200">
         {navItems.map((item) => (
           <Link
             key={item.id}
@@ -44,6 +49,13 @@ export default function DashboardNav() {
                 layoutId="activeTab"
                 className="absolute bottom-0 left-0 right-0 h-0.5 bg-red-600"
                 initial={false}
+                animate={{ opacity: 1 }}
+              />
+            )}
+          </Link>
+        ))}
+      </nav>
+    </div>
                 transition={{ type: "spring", stiffness: 500, damping: 30 }}
               />
             )}

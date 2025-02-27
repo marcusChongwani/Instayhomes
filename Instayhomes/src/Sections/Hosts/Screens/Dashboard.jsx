@@ -28,7 +28,7 @@ export default function Dashboard() {
       initial="hidden"
       animate="visible"
       variants={containerVariants}
-      className="pt-20 min-h-screen max-w-7xl mx-auto px-4 py-8"
+      className="pt-10 min-h-screen max-w-7xl mx-auto px-4 py-8"
     >
       <motion.h1 
         variants={itemVariants}
