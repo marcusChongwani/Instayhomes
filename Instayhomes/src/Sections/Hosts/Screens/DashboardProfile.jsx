@@ -1,7 +1,6 @@
 
 import { motion } from "framer-motion";
 import { FiUser, FiMail, FiPhone, FiMapPin, FiEdit } from "react-icons/fi";
-import DashboardNav from "../Components/DashboardNav";
 
 export default function DashboardProfile() {
   const containerVariants = {
@@ -34,21 +33,7 @@ export default function DashboardProfile() {
   };
 
   return (
-    <motion.div 
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-      className="pt-10 min-h-screen"
-    >
-      <motion.h1 
-        variants={itemVariants}
-        className="text-3xl font-bold text-gray-800 mb-4"
-      >
-        Host Dashboard
-      </motion.h1>
-      
-      <DashboardNav />
-      
+    <motion.div variants={containerVariants}>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <motion.div 
           variants={itemVariants}
@@ -87,30 +72,44 @@ export default function DashboardProfile() {
           variants={itemVariants}
           className="md:col-span-2 bg-white p-6 rounded-xl shadow-md"
         >
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">About Me</h3>
-          <p className="text-gray-600 mb-6">{profile.bio}</p>
+          <h2 className="text-xl font-semibold text-gray-700 mb-4">About</h2>
+          <p className="text-gray-600 mb-6">
+            {profile.bio}
+          </p>
           
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Account Statistics</h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="text-sm text-gray-500">Properties Listed</p>
-              <p className="text-2xl font-bold text-gray-800">3</p>
+          <h2 className="text-xl font-semibold text-gray-700 mb-4">Account Settings</h2>
+          
+          <div className="space-y-4">
+            <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+              <div>
+                <h3 className="font-medium text-gray-800">Password</h3>
+                <p className="text-sm text-gray-500">Last changed 3 months ago</p>
+              </div>
+              <button className="text-red-600 font-medium">Change</button>
             </div>
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="text-sm text-gray-500">Active Tenants</p>
-              <p className="text-2xl font-bold text-gray-800">12</p>
+            
+            <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+              <div>
+                <h3 className="font-medium text-gray-800">Two-Factor Authentication</h3>
+                <p className="text-sm text-gray-500">Disabled</p>
+              </div>
+              <button className="text-red-600 font-medium">Enable</button>
             </div>
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="text-sm text-gray-500">Avg. Rating</p>
-              <p className="text-2xl font-bold text-gray-800">4.8</p>
+            
+            <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+              <div>
+                <h3 className="font-medium text-gray-800">Email Notifications</h3>
+                <p className="text-sm text-gray-500">Enabled for all activities</p>
+              </div>
+              <button className="text-red-600 font-medium">Configure</button>
             </div>
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="text-sm text-gray-500">Inquiries This Month</p>
-              <p className="text-2xl font-bold text-gray-800">24</p>
-            </div>
-            <div className="bg-gray-50 p-4 rounded-lg">
-              <p className="text-sm text-gray-500">Member Since</p>
-              <p className="text-2xl font-bold text-gray-800">2022</p>
+            
+            <div className="flex justify-between items-center p-4 bg-gray-50 rounded-lg">
+              <div>
+                <h3 className="font-medium text-gray-800">Payment Information</h3>
+                <p className="text-sm text-gray-500">Visa ending in 4242</p>
+              </div>
+              <button className="text-red-600 font-medium">Update</button>
             </div>
           </div>
         </motion.div>
