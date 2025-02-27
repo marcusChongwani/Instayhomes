@@ -1,85 +1,76 @@
 
-import React from "react";
+import React, { useEffect } from "react";
+import { Outlet, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
-import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { FiHome, FiList, FiUser } from "react-icons/fi";
-import Navbar from "../Components/Navbar";
+
+const navItems = [
+  { path: "/hosts/dashboard", label: "Overview", icon: <FiHome />, exact: true },
+  { path: "/hosts/dashboard/properties", label: "Properties", icon: <FiList /> },
+  { path: "/hosts/dashboard/profile", label: "Profile", icon: <FiUser /> }
+];
 
 export default function DashboardLayout() {
   const location = useLocation();
   const navigate = useNavigate();
   
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { 
-        staggerChildren: 0.1
-      }
-    }
+  const linkClasses = (isActive) => {
+    return `flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
+      isActive
+        ? "text-red-600 font-semibold"
+        : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+    }`;
   };
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { duration: 0.5, ease: "easeOut" }
+  const handleSwipe = (event, info) => {
+    const swipeThreshold = 100;
+    const currentIndex = navItems.findIndex(item => item.path === location.pathname);
+    
+    if (info.offset.x < -swipeThreshold && currentIndex < navItems.length - 1) {
+      navigate(navItems[currentIndex + 1].path);
+    } else if (info.offset.x > swipeThreshold && currentIndex > 0) {
+      navigate(navItems[currentIndex - 1].path);
     }
   };
-
-  const navItems = [
-    { id: "overview", label: "Overview", icon: <FiHome />, path: "/hosts/dashboard" },
-    { id: "properties", label: "Properties", icon: <FiList />, path: "/hosts/dashboard/properties" },
-    { id: "profile", label: "Profile", icon: <FiUser />, path: "/hosts/dashboard/profile" }
-  ];
 
   return (
-    <div className="min-h-screen bg-white">
-      <Navbar />
-      <motion.div 
-        initial="hidden"
-        animate="visible"
-        variants={containerVariants}
-        className="pt-10 min-h-screen max-w-7xl mx-auto px-4 py-8"
-      >
-        <motion.h1 
-          variants={itemVariants}
-          className="text-3xl font-bold text-gray-800 mt-4 mb-2"
-        >
-          Host Dashboard
-        </motion.h1>
-        
-        {/* Navigation */}
-        <div className="mb-8 pb-4">
-          <nav className="flex overflow-x-auto border-b border-gray-200">
-            <div className="flex space-x-8">
-              {navItems.map((item) => (
-                <NavLink
-                  key={item.id}
-                  to={item.path}
-                  end={item.id === "overview"}
-                  className={({ isActive }) => 
-                    `flex items-center px-1 py-4 text-sm font-medium relative ${
-                      isActive 
-                        ? "text-red-600" 
-                        : "text-gray-500 hover:text-gray-700 hover:border-gray-300"
-                    }`
-                  }
-                >
-                  <span className="flex items-center">
-                    <span className="mr-2">{item.icon}</span>
-                    <span>{item.label}</span>
-                  </span>
-                </NavLink>
-              ))}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -50 }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
+    >
+      <div className="p-8 pt-20">
+        <div className="max-w-7xl mx-auto">
+          <h1 className="text-3xl font-bold text-gray-800 mb-4">Host Dashboard</h1>
+          <nav className="mb-8">
+            <div className="overflow-x-auto whitespace-nowrap">
+              <div className="flex items-center gap-4 text-md">
+                {navItems.map((item) => (
+                  <NavLink
+                    key={item.path}
+                    to={item.path}
+                    end={item.exact || undefined}
+                    className={({ isActive }) => linkClasses(isActive)}
+                  >
+                    {item.icon} {item.label}
+                  </NavLink>
+                ))}
+              </div>
             </div>
           </nav>
+
+          {/* Swipe-enabled Outlet */}
+          <motion.div
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            onDragEnd={handleSwipe}
+            className="overflow-hidden"
+          >
+            <Outlet />
+          </motion.div>
         </div>
-        
-        {/* Content */}
-        <Outlet />
-      </motion.div>
-    </div>
+      </div>
+    </motion.div>
   );
 }
