@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AmbassadorRoutes from "./Routes/AmbassadorRoutes";
 import MainRoutes from "./Routes/MainRoutes";
+import HostsRoutes from "./Routes/HostsRoutes";
 import SignUpForm from "./Authentication/SignUpForm";
 import LogInForm from "./Authentication/LogInForm";
 import "./App.css";
@@ -16,6 +17,9 @@ function App() {
 
         {/* Ambassador section */}
         <Route path="/ambassador/*" element={<AmbassadorRoutes />} />
+        
+        {/* Hosts section */}
+        <Route path="/hosts/*" element={<HostsRoutes />} />
 
         {/* Global Routes */}
         <Route path="/signup" element={<SignUpForm />} />
