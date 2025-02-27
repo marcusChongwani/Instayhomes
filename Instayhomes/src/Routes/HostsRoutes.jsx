@@ -2,7 +2,7 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import HostsLayout from "../Layouts/HostsLayout";
-import DashboardLayout from "../Layouts/DashboardLayout";
+import DashboardLayout from "../Sections/Hosts/Screens/DashboardLayout";
 import Home from "../Sections/Hosts/Screens/Home";
 import Dashboard from "../Sections/Hosts/Screens/Dashboard";
 import DashboardProperties from "../Sections/Hosts/Screens/DashboardProperties";
