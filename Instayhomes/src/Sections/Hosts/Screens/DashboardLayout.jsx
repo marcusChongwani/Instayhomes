@@ -1,6 +1,5 @@
-
 import React, { useEffect } from "react";
-import { Outlet, NavLink, useNavigate, useLocation } from "react-router-dom";
+import { Outlet, NavLink, useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FiHome, FiList, FiUser } from "react-icons/fi";
 
@@ -12,8 +11,7 @@ const navItems = [
 
 export default function DashboardLayout() {
   const location = useLocation();
-  const navigate = useNavigate();
-  
+
   const linkClasses = (isActive) => {
     return `flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
       isActive
@@ -22,16 +20,6 @@ export default function DashboardLayout() {
     }`;
   };
 
-  const handleSwipe = (event, info) => {
-    const swipeThreshold = 100;
-    const currentIndex = navItems.findIndex(item => item.path === location.pathname);
-    
-    if (info.offset.x < -swipeThreshold && currentIndex < navItems.length - 1) {
-      navigate(navItems[currentIndex + 1].path);
-    } else if (info.offset.x > swipeThreshold && currentIndex > 0) {
-      navigate(navItems[currentIndex - 1].path);
-    }
-  };
 
   return (
     <motion.div
@@ -62,9 +50,6 @@ export default function DashboardLayout() {
 
           {/* Swipe-enabled Outlet */}
           <motion.div
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            onDragEnd={handleSwipe}
             className="overflow-hidden"
           >
             <Outlet />
