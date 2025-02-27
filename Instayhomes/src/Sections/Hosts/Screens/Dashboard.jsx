@@ -1,6 +1,7 @@
 
 import { motion } from "framer-motion";
 import { FiHome, FiDollarSign, FiUsers, FiMessageCircle } from "react-icons/fi";
+import DashboardNav from "../Components/DashboardNav";
 
 export default function Dashboard() {
   const containerVariants = {
@@ -31,10 +32,12 @@ export default function Dashboard() {
     >
       <motion.h1 
         variants={itemVariants}
-        className="text-3xl font-bold text-gray-800 mb-6"
+        className="text-3xl font-bold text-gray-800 mb-4"
       >
         Host Dashboard
       </motion.h1>
+      
+      <DashboardNav />
       
       {/* Stats Overview */}
       <motion.div 
