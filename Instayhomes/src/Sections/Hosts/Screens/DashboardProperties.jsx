@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { FiEdit2, FiTrash2, FiEye } from "react-icons/fi";
+import { useNavigate, Link } from "react-router-dom";
 
 export default function DashboardProperties() {
   const containerVariants = {
@@ -65,9 +66,9 @@ export default function DashboardProperties() {
     >
       <motion.div variants={itemVariants} className="flex justify-between items-center">
         <h2 className="text-xl font-semibold">Your Properties</h2>
-        <button className="bg-red-600 text-white px-4 py-2 rounded-lg">
+        <Link to="/hosts/list-property" className="bg-red-600 text-white px-4 py-2 rounded-lg inline-block">
           Add New Property
-        </button>
+        </Link>
       </motion.div>
 
       <motion.div variants={itemVariants} className="overflow-x-auto">
