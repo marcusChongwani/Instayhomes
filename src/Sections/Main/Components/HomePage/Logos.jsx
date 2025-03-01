@@ -1,13 +1,11 @@
 
 
 import React from 'react';
-import FAQ from './FAQ';
-import SafeExperience from './SafeExperience';
-import PropertyCard from '../ListingsPage/PropertyCard';
+
 
 export default function Logos() {
   return (
-    <section className="bg-white h-screen py-20 pb-20">
+    <section className="bg-white  py-2 pb-4">
       <div className="py-8 lg:py-16 mx-auto max-w-screen-xl px-4">
         <h2 className="mb-8 lg:mb-16 text-3xl font-extrabold tracking-tight leading-tight text-center text-gray-700 md:text-4xl">
           Trusted by students from Top Universities
@@ -30,9 +28,7 @@ export default function Logos() {
           </a>
         </div>
       </div>
-      <SafeExperience/>
-      <FAQ/>
-      <PropertyCard/>
+     
     </section>
   );
 }

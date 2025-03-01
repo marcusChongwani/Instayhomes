@@ -48,10 +48,10 @@ export default function Navbar() {
             </motion.button>
 
             <div className="flex flex-col items-center space-y-6 mt-12">
-              <Link to="/hosts" className="text-xl text-gray-800 hover:text-red-600 font-medium" onClick={toggleMenu}>Home</Link>
-              <Link to="/hosts/dashboard" className="text-xl text-gray-800 hover:text-red-600 font-medium" onClick={toggleMenu}>Dashboard</Link>
-              <Link to="/hosts/list-property" className="text-xl text-gray-800 hover:text-red-600 font-medium" onClick={toggleMenu}>List Property</Link>
-              <Link to="/" className="text-xl text-gray-800 hover:text-red-600 font-medium" onClick={toggleMenu}>Switch to Guest</Link>
+              <Link to="/hosts" className="text-2xl text-gray-800 hover:text-red-600 font-medium" onClick={toggleMenu}>Home</Link>
+              <Link to="/hosts/dashboard" className="text-2xl text-gray-800 hover:text-red-600 font-medium" onClick={toggleMenu}>Dashboard</Link>
+              <Link to="/hosts/list-property" className="text-2xl text-gray-800 hover:text-red-600 font-medium" onClick={toggleMenu}>List Property</Link>
+              <Link to="/" className="text-2xl text-gray-800 hover:text-red-600 font-medium" onClick={toggleMenu}>Switch to Guest</Link>
             </div>
           </motion.div>
         )}

@@ -16,7 +16,7 @@ const PropertyCard = () => {
   ];
 
   return (
-    <div className="md:max-w-sm border border-gray-200 bg-white rounded-md mb-4 transition-transform duration-300 hover:scale-101 cursor-pointer active:scale-100">
+    <div className="max-w-sm border border-gray-200 bg-white rounded-md mb-4 transition-transform duration-300 hover:scale-101 cursor-pointer active:scale-100">
       <div className="relative max-h-sm w-full mb-2">
         <span className="mb-2 absolute top-3 left-4 bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded z-30">
           Available

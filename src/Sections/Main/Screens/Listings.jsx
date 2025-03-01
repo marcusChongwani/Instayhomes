@@ -40,7 +40,7 @@ export default function ListingsPage() {
       className="pt-20  min-h-screen"
     >
       {/* Search & Filters - Floating Sticky */}
-      <div className="sticky top-16 bg-white  z-50">
+      <div className="sticky top-16 bg-white  z-0">
         <div className="max-w-7xl mx-auto ">
           <SearchBar query={query} />
           <SchoolFilterButtons />

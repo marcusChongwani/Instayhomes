@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import { FaCheckCircle, FaUserGraduate, FaHome, FaHandshake } from "react-icons/fa";
 import Hero from "../Components/HomePage/Hero";
+import Logos from "../Components/HomePage/Logos";
+import PropertyCard from "../Components/ListingsPage/PropertyCard";
 
 export default function Home() {
   return (
@@ -13,7 +15,7 @@ export default function Home() {
     >
       <main className="relative">
         <Hero />
-        <WhatWeDo />
+        <Logos/>
         <Features />
         <HowItWorks />
         <Testimonials />
@@ -65,14 +67,17 @@ const WhatWeDo = () => (
 
 // Features
 const Features = () => (
-  <SectionWrapper title="Why Choose Instay?">
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <FeatureItem icon={<FaCheckCircle />} text="Verified Listings" />
-      <FeatureItem icon={<FaUserGraduate />} text="Affordable & Safe Housing" />
-      <FeatureItem icon={<FaHome />} text="Easy Search & Filters" />
-      <FeatureItem icon={<FaHandshake />} text="Direct Chat with Landlords" />
-    </div>
-  </SectionWrapper>
+  <div class="container mx-auto px-4 py-8">
+      
+      <h2 class="text-3xl text-gray-700 font-bold mb-4 text-center mb-8">Featured Properties</h2>
+
+      <div class="flex overflow-x-auto pb-4 space-x-4">
+        <PropertyCard/>
+        <PropertyCard/>
+        <PropertyCard/>
+        <PropertyCard/>
+      </div>
+  </div>
 );
 
 const FeatureItem = ({ icon, text }) => (
