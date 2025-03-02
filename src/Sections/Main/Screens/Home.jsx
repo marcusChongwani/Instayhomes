@@ -1,13 +1,19 @@
+
+
+
+
+
 import { motion } from "framer-motion";
-import { FaCheckCircle, FaUserGraduate, FaHome, FaHandshake } from "react-icons/fa";
+import { FaWhatsapp } from "react-icons/fa";
 import Hero from "../Components/HomePage/Hero";
 import Logos from "../Components/HomePage/Logos";
-import PropertyCard from "../Components/ListingsPage/PropertyCard";
+import HowItWorks from "../Components/HomePage/HowItWorks";
+import FAQ from "../Components/HomePage/FAQ";
 
 export default function Home() {
   return (
     <motion.div
-      className="pb-20"
+      className="pb-2"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -50 }}
@@ -16,13 +22,10 @@ export default function Home() {
       <main className="relative">
         <Hero />
         <Logos/>
-        <Features />
-        <HowItWorks />
-        <Testimonials />
         <BecomeAHost />
-        <BecomeAnAmbassador />
-        <FAQs />
-        <CallToAction />
+        <HowItWorks />
+        <FAQ/>
+        <CallToAction/>
       </main>
     </motion.div>
   );
@@ -66,90 +69,60 @@ const WhatWeDo = () => (
 );
 
 // Features
-const Features = () => (
-  <div class="container mx-auto px-4 py-8">
-      
-      <h2 class="text-3xl text-gray-700 font-bold mb-4 text-center mb-8">Featured Properties</h2>
 
-      <div class="flex overflow-x-auto pb-4 space-x-4">
-        <PropertyCard/>
-        <PropertyCard/>
-        <PropertyCard/>
-        <PropertyCard/>
-      </div>
-  </div>
-);
 
-const FeatureItem = ({ icon, text }) => (
-  <motion.div
-    className="flex items-center gap-3 p-4 bg-gray-100 rounded-lg shadow-md"
-    whileHover={{ scale: 1.05 }}
-  >
-    <span className="text-red-600 text-2xl">{icon}</span>
-    <p className="text-lg font-medium">{text}</p>
-  </motion.div>
-);
 
-// How It Works
-const HowItWorks = () => (
-  <SectionWrapper title="How It Works">
-    <ol className="list-decimal pl-5 space-y-3 text-left max-w-lg mx-auto">
-      <li>Search for hostels near your university.</li>
-      <li>Compare amenities, prices, and availability.</li>
-      <li>Chat with landlords and schedule a visit.</li>
-      <li>Secure your ideal student housing.</li>
-    </ol>
-  </SectionWrapper>
-);
 
-// Testimonials
-const Testimonials = () => (
-  <SectionWrapper title="What Students & Landlords Say">
-    <p>“Instay made finding a safe hostel so easy!” – Jane, Student</p>
-    <p>“I found great tenants quickly!” – Mr. Banda, Landlord</p>
-  </SectionWrapper>
-);
 
 // Become a Host
 const BecomeAHost = () => (
-  <SectionWrapper title="Become a Host">
-    <p>Are you a landlord? List your property and connect with students today.</p>
-    <button className="mt-6 px-6 py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700">
-      List Your Property
-    </button>
-  </SectionWrapper>
+  <section className="bg-gray-50">
+    <div className="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
+      <img className="w-full rounded-lg" src="https://www.smu.ca/webfiles/homepage8-626x313.png" />
+      <div className="mt-4 md:mt-0">
+        <h2 className="mb-4 text-2xl tracking-tight font-extrabold text-gray-700">Are you a landlord? connect with thousands of students .</h2>
+        <p className="mb-6 font-light text-gray-500 md:text-lg">Reach thousands of students looking for housing! List your property on our platform and make renting easy. Join our network of landlords and fill your vacancies quickly!</p>
+        <a href="#" className="inline-flex items-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+          List Your Property
+          <svg className="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </section>
 );
 
-// Become an Ambassador
-const BecomeAnAmbassador = () => (
-  <SectionWrapper title="Become an Ambassador">
-    <p>Earn rewards by referring students and landlords to Instay.</p>
-    <button className="mt-6 px-6 py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700">
-      Join Now
-    </button>
-  </SectionWrapper>
-);
 
-// FAQs
-const FAQs = () => (
-  <SectionWrapper title="Frequently Asked Questions">
-    <details className="mb-4">
-      <summary className="cursor-pointer font-medium">How does Instay verify listings?</summary>
-      <p className="mt-2 text-gray-600">Every listing is checked in person to ensure it meets our standards.</p>
-    </details>
-    <details className="mb-4">
-      <summary className="cursor-pointer font-medium">Can I contact landlords directly?</summary>
-      <p className="mt-2 text-gray-600">Yes! Instay allows you to chat directly with landlords.</p>
-    </details>
-  </SectionWrapper>
-);
+
+
+
 
 // Call to Action
 const CallToAction = () => (
-  <SectionWrapper title="Start Your Search Today">
-    <p>Find the best student housing in just a few clicks.</p>
-    <button className="mt-6 px-6 py-3 bg-red-600 text-white rounded-lg shadow-lg hover:bg-red-700">
-      Get Started
-    </button>
-  </SectionWrapper>
+  <section className="py-16">
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div
+        className="lg:py-14 lg:px-20 p-10 rounded-2xl bg-gradient-to-r from-red-600 to-blue-600 flex items-center justify-between flex-col lg:flex-row"
+      >
+        <div className="block text-center mb-5 lg:text-left lg:mb-0">
+          <h2 className=" text-2xl text-white font-semibold mb-5 lg:mb-2">
+            Customer Support 
+          </h2>
+          <p className="text-xl text-indigo-100">
+            Contact us with any query or challenge you may face.
+          </p>
+        </div>
+        <a
+          href="https://wa.me/260779722215" // Replace "your-number" with the actual WhatsApp number (e.g., 260971234567)
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 bg-white rounded-full shadow-sm text-lg text-indigo-600 font-semibold py-4 px-8 transition-all duration-500 hover:bg-green-500 hover:text-white"
+        >
+          Get In Touch
+          <FaWhatsapp size={22} />
+        </a>
+      </div>
+    </div>
+  </section>
 );
