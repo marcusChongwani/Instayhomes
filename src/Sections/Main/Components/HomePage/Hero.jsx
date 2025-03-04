@@ -1,39 +1,79 @@
+import { Star } from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
+import Stats from "./Stats";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 
-
-const Hero = () => {
+const Hero = ({
+  heading = "Make the easy move.",
+  description = "Instay connects students with verified landlords and quality accommodations, making your housing search safe, simple, and successful.",
+  reviews = {
+    count: 200,
+    avatars: [
+      {
+        src: "https://www.shadcnblocks.com/images/block/avatar-1.webp",
+        alt: "Avatar 1",
+      },
+      {
+        src: "https://www.shadcnblocks.com/images/block/avatar-2.webp",
+        alt: "Avatar 2",
+      },
+      {
+        src: "https://www.shadcnblocks.com/images/block/avatar-3.webp",
+        alt: "Avatar 3",
+      },
+      {
+        src: "https://www.shadcnblocks.com/images/block/avatar-4.webp",
+        alt: "Avatar 4",
+      },
+      {
+        src: "https://www.shadcnblocks.com/images/block/avatar-5.webp",
+        alt: "Avatar 5",
+      },
+    ],
+  },
+}) => {
   return (
-    <div className="bg-white">
-      <div className="flex px-8 flex-col items-center justify-center pt-20 mt-8 text-center">
-        <h2 className="px-4 text-5xl font-bold text-gray-700">
-          Make the easy move.
-        </h2>
-        <p className="mt-8 text-lg text-gray-800">
-          Explore affordable and verified listings near your campus and find a
-          place that suits your lifestyle.
-        </p>
-      </div>
-
-      <div className="flex flex-col items-center justify-center mt-10 px-8">
-        <div className="flex items-center justify-between py-2 px-3 w-full border border-gray-200 rounded-3xl">
-          <Link 
-            to="/search"
-          
-            className="font-medium  px-4 py-2 w-full text-gray-300"
-          >Search by university</Link>
+    <section className="pt-32 pb-10 px-4">
+      <div className="container text-center">
+        <div className="mx-auto flex max-w-screen-lg flex-col gap-6">
+          <h1 className="text-5xl font-bold lg:text-6xl">{heading}</h1>
+          <p className="text-balance text-muted-foreground lg:text-lg">
+            {description}
+          </p>
         </div>
+        <Link to="/search">
+          <Button  size="lg" className="mt-10 ">
+            Start Searching Now
+          </Button>
+        </Link>
+        <div className="mx-auto mt-10 flex w-fit flex-col items-center gap-4 sm:flex-row">
+          <span className="mx-4 inline-flex items-center -space-x-4">
+            {reviews.avatars.map((avatar, index) => (
+              <Avatar key={index} className="size-14 border">
+                <AvatarImage src={avatar.src} alt={avatar.alt} />
+              </Avatar>
+            ))}
+          </span>
+          <div>
+            <div className="flex items-center gap-1">
+              {[...Array(5)].map((_, index) => (
+                <Star
+                  key={index}
+                  className="size-5 fill-yellow-400 text-yellow-400"
+                />
+              ))}
+            </div>
+            <p className="text-left font-medium text-muted-foreground">
+              from {reviews.count}+ reviews
+            </p>
+          </div>
+        </div>
+        <Stats/>
       </div>
-
-      <div className="bg-black mt-16 rounded-t-full">
-        <img
-          src="https://littlebigbell.com/wp-content/uploads/2020/09/coat-B-scaled.jpg"
-          alt="Hero"
-          className="w-full h-full object-cover rounded-t-full"
-        />
-      </div>
-    </div>
+    </section>
   );
 };
-
-export default Hero;
+;
+export default Hero

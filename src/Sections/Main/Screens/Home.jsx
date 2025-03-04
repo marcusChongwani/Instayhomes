@@ -1,14 +1,12 @@
-
-
-
-
-
 import { motion } from "framer-motion";
 import { FaWhatsapp } from "react-icons/fa";
 import Hero from "../Components/HomePage/Hero";
 import Logos from "../Components/HomePage/Logos";
 import HowItWorks from "../Components/HomePage/HowItWorks";
 import FAQ from "../Components/HomePage/FAQ";
+import FeaturesSection from "../Components/HomePage/FeaturesSection";
+import {Link} from 'react-router-dom';
+import CTASection from "../Components/HomePage/CTASection";
 
 export default function Home() {
   return (
@@ -23,9 +21,10 @@ export default function Home() {
         <Hero />
         <Logos/>
         <BecomeAHost />
+        <FeaturesSection/>
         <HowItWorks />
         <FAQ/>
-        <CallToAction/>
+        <CTASection/>
       </main>
     </motion.div>
   );
@@ -34,7 +33,7 @@ export default function Home() {
 // Section Wrapper
 const SectionWrapper = ({ title, children }) => (
   <motion.section
-    className="py-16 px-6 max-w-6xl mx-auto text-center"
+    className="py-16 px-2 max-w-6xl mx-auto text-center"
     initial={{ opacity: 0, y: 50 }}
     whileInView={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.6, ease: "easeOut" }}
@@ -82,12 +81,12 @@ const BecomeAHost = () => (
       <div className="mt-4 md:mt-0">
         <h2 className="mb-4 text-2xl tracking-tight font-extrabold text-gray-700">Are you a landlord? connect with thousands of students .</h2>
         <p className="mb-6 font-light text-gray-500 md:text-lg">Reach thousands of students looking for housing! List your property on our platform and make renting easy. Join our network of landlords and fill your vacancies quickly!</p>
-        <a href="#" className="inline-flex items-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+        <Link to="/hosts" className="inline-flex items-center text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
           List Your Property
           <svg className="ml-2 -mr-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <path fillRule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clipRule="evenodd"></path>
           </svg>
-        </a>
+        </Link>
       </div>
     </div>
   </section>
@@ -97,32 +96,3 @@ const BecomeAHost = () => (
 
 
 
-
-// Call to Action
-const CallToAction = () => (
-  <section className="py-16">
-    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div
-        className="lg:py-14 lg:px-20 p-10 rounded-2xl bg-gradient-to-r from-red-600 to-blue-600 flex items-center justify-between flex-col lg:flex-row"
-      >
-        <div className="block text-center mb-5 lg:text-left lg:mb-0">
-          <h2 className=" text-2xl text-white font-semibold mb-5 lg:mb-2">
-            Customer Support 
-          </h2>
-          <p className="text-xl text-indigo-100">
-            Contact us with any query or challenge you may face.
-          </p>
-        </div>
-        <a
-          href="https://wa.me/260779722215" // Replace "your-number" with the actual WhatsApp number (e.g., 260971234567)
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 bg-white rounded-full shadow-sm text-lg text-indigo-600 font-semibold py-4 px-8 transition-all duration-500 hover:bg-green-500 hover:text-white"
-        >
-          Get In Touch
-          <FaWhatsapp size={22} />
-        </a>
-      </div>
-    </div>
-  </section>
-);
